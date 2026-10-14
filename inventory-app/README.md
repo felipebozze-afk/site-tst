@@ -1,19 +1,31 @@
-﻿# Estoque Inteligente
+# Inventário Inteligente
 
-Sistema web para gerenciamento de inventário, conforme GP 1 do SENAI. Feito com Next.js, TypeScript, Supabase (PostgreSQL) e Vercel.
+Aplicação web do GP 1 SENAI com frontend e backend em pastas separadas. Foi preparada para demonstração e testes locais.
 
-## Executar
-1. Instale Node.js 20+.
-2. Rode `npm install` e `npm run dev` nesta pasta.
-3. Acesse http://localhost:3000.
+## Endereços locais
 
-O dashboard abre com dados demonstrativos. O botão Novo produto permite cadastrar produtos no estado local do navegador.
+- Site Next.js: http://localhost:3000
+- API Node.js: http://localhost:4000/api/health
 
-## Supabase
-Crie um projeto Supabase, copie `.env.example` para `.env.local` e configure URL e chave anon. Execute `supabase/schema.sql` no SQL Editor. O esquema cria tabelas relacionais para perfis, categorias, fornecedores, locais, produtos e movimentações, além de políticas RLS e trigger de atualização do saldo. A interface ainda usa dados locais; autenticação e persistência precisam ser conectadas para produção.
+## Guias disponíveis
 
-## Vercel
-Suba a pasta para um repositório GitHub, importe o repositório na Vercel, cadastre `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` nas variáveis de ambiente e faça o deploy.
+- Visão geral: indicadores, alertas e movimentações recentes.
+- Produtos: busca, consulta e cadastro com SKU único.
+- Movimentações: histórico, registro de entrada e saída; o saldo atualiza e saídas sem saldo são recusadas.
+- Relatórios: resumo do estoque e exportação CSV.
+- Categorias, Fornecedores, Locais e Usuários: listagem e cadastro de demonstração.
+- Configurações: estado da API e informação sobre persistência.
+- Ajuda e suporte: instruções de uso para os testes.
 
-## Escopo ainda necessário para produção
-Login e gestão de convites; CRUD de categorias, fornecedores e locais; registro de entradas/saídas ligado ao Supabase; relatórios e revisão das permissões conforme os papéis da empresa.
+## Executar manualmente
+
+Na pasta `inventory-app`, inicie em dois terminais:
+
+1. `node backend/server.mjs`
+2. `cd frontend`, `npm install` e `npm run dev`
+
+A API expõe `GET /api/health`, `GET/POST /api/products`, `GET/POST /api/movements` e `GET/POST /api/categories`, `/api/suppliers`, `/api/locations`, `/api/users`.
+
+## Dados e Supabase
+
+O ambiente de teste armazena os cadastros em memória. Ao reiniciar o backend, os dados voltam à demonstração inicial. O modelo PostgreSQL/Supabase está em `supabase/schema.sql`, mas ainda não está conectado à API local. A publicação na Vercel também requer configurar a API como serviço separado ou converter seus endpoints para funções serverless.
